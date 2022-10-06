@@ -1,0 +1,70 @@
+﻿@model _04_Data.Datos.pelicula
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+@*<div id=”PeliculaMvcPartialView”> </div>*@
+<div id="PeliculaMvcPartialView"> </div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+
+@{
+    int miId = Model.id + 1;
+}
+<script type="text/javascript">
+
+    document.body.onload = function () {
+        pelicula(@miId, 0);
+    }
+
+    function pelicula(param1, param2) {
+        var apiUrl = 'https://localhost:44396/Api/peliculasApi/';
+
+        if (param1 > 0) {
+            //apiUrl = apiUrl + "/" + param1 + "/" + siguente;
+            //var boolSiguiente = 0;
+            //if (param2 != null && param2 > 0) {
+            //    boolSiguiente = 1;
+            //}
+            apiUrl = apiUrl + "?id=" + param1 + "&siguiente=" + param2;
+            //llamamos a un objeto de la librería jQuery y le pasamos la apiUrl
+            $.ajax(
+                {
+                    //parámetros de configuración del objeto Ajax de jQuery
+                    type: "GET", //HTTP GET Method
+                    url: apiUrl//, // Controller/View
+                    //data: No es necesario: Es GET
+                    //el objeto nos muestra lo que le ha devuelto la api como parámetro: "res"
+                }).done(function (res) {
+                    //Enviamos el jSon "res" al peliculasMvcController
+                    //método: _peliculaMvcOtraPartialView(res)
+                    $.ajax(
+                        {
+                            type: "POST", //HTTP POST Method
+                            //url: "_peliculaMvcOtraPartialView", // Controller/View
+                            url: "../_PeliculaMvcPartialView", // Controller/View
+                            data: res
+                            //Nos devuelve una respuesta "resDeLaRes"
+                            //Que es un string con el html de la vista _peliculaMvcOtraPartialView
+                        }).done(function (resDeLaRes) {
+                            //Borramos lo que pueda haber en todos los div de la Class = miClase
+                            //$('.miClase').empty();
+                            //Cargamos la Vista Html dentro del <div>
+                            $('#PeliculaMvcPartialView').empty().append(resDeLaRes);
+                        }).fail(function (resDeLaRes) {
+                            console.log(resDeLaRes);
+                        }).always(function (resDeLaRes) {
+                            console.log(resDeLaRes);
+                        });
+                }).fail(function (res) {
+                    console.log(res);
+                }).always(function (res) {
+                    console.log(res);
+                });
+        }
+    }
+</script>

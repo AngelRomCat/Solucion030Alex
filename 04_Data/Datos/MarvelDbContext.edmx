@@ -1,0 +1,730 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="MarvelModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="actor">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="actor_principal" Type="varchar" MaxLength="250" />
+          <Property Name="fecha_nacimiento" Type="date" />
+          <Property Name="años_activo" Type="varchar" MaxLength="250" />
+          <Property Name="ocupacion" Type="varchar" MaxLength="250" />
+          <Property Name="premios" Type="varchar" MaxLength="250" />
+          <Property Name="foto" Type="varchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="companyia">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="250" />
+          <Property Name="tipo" Type="varchar" MaxLength="250" />
+          <Property Name="industria" Type="varchar" MaxLength="250" />
+          <Property Name="sede_central" Type="varchar" MaxLength="250" />
+          <Property Name="fundacion" Type="date" />
+          <Property Name="fundador" Type="varchar" MaxLength="250" />
+          <Property Name="logo" Type="varchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="director">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="250" />
+          <Property Name="fecha_nacimiento" Type="date" />
+          <Property Name="residencia" Type="varchar" MaxLength="250" />
+          <Property Name="premios" Type="varchar" MaxLength="250" />
+          <Property Name="distinciones" Type="varchar" MaxLength="250" />
+          <Property Name="foto" Type="varchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="frase">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_pelicula" Type="int" />
+          <Property Name="id_actor" Type="int" />
+          <Property Name="frase" Type="varchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="genero">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="pedido">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_tipo_pago" Type="int" />
+          <Property Name="id_usuario" Type="int" />
+          <Property Name="nombre" Type="varchar" MaxLength="250" />
+          <Property Name="precio" Type="decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="pelicula">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_actor" Type="int" />
+          <Property Name="id_director" Type="int" />
+          <Property Name="id_genero" Type="int" />
+          <Property Name="id_companyia" Type="int" />
+          <Property Name="titulo" Type="varchar" MaxLength="250" />
+          <Property Name="añolanzamiento" Type="varchar" MaxLength="250" />
+          <Property Name="sinopsis" Type="varchar" MaxLength="250" />
+          <Property Name="premios" Type="varchar" MaxLength="250" />
+          <Property Name="duracion" Type="varchar" MaxLength="250" />
+          <Property Name="clasificacion" Type="varchar" MaxLength="250" />
+          <Property Name="presupuesto" Type="varchar" MaxLength="250" />
+          <Property Name="recaudacion" Type="varchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="tipo_pago">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="tipo_usuario">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="usuario">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_tipo_usuario" Type="int" />
+          <Property Name="nombre" Type="varchar" MaxLength="250" />
+          <Property Name="apellido01" Type="varchar" MaxLength="250" />
+          <Property Name="apellido02" Type="varchar" MaxLength="250" />
+        </EntityType>
+        <Association Name="FK_frase_actor">
+          <End Role="actor" Type="Self.actor" Multiplicity="0..1" />
+          <End Role="frase" Type="Self.frase" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="actor">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="frase">
+              <PropertyRef Name="id_actor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_frase_pelicula">
+          <End Role="pelicula" Type="Self.pelicula" Multiplicity="0..1" />
+          <End Role="frase" Type="Self.frase" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="pelicula">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="frase">
+              <PropertyRef Name="id_pelicula" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_pedido_tipo_pago">
+          <End Role="tipo_pago" Type="Self.tipo_pago" Multiplicity="0..1" />
+          <End Role="pedido" Type="Self.pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tipo_pago">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="pedido">
+              <PropertyRef Name="id_tipo_pago" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_pedido_usuario">
+          <End Role="usuario" Type="Self.usuario" Multiplicity="0..1" />
+          <End Role="pedido" Type="Self.pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="pedido">
+              <PropertyRef Name="id_usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_pelicula_actor">
+          <End Role="actor" Type="Self.actor" Multiplicity="0..1" />
+          <End Role="pelicula" Type="Self.pelicula" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="actor">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="pelicula">
+              <PropertyRef Name="id_actor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_pelicula_companyia">
+          <End Role="companyia" Type="Self.companyia" Multiplicity="0..1" />
+          <End Role="pelicula" Type="Self.pelicula" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="companyia">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="pelicula">
+              <PropertyRef Name="id_companyia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_pelicula_director">
+          <End Role="director" Type="Self.director" Multiplicity="0..1" />
+          <End Role="pelicula" Type="Self.pelicula" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="director">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="pelicula">
+              <PropertyRef Name="id_director" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_pelicula_genero">
+          <End Role="genero" Type="Self.genero" Multiplicity="0..1" />
+          <End Role="pelicula" Type="Self.pelicula" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="genero">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="pelicula">
+              <PropertyRef Name="id_genero" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_usuario_tipo_usuario">
+          <End Role="tipo_usuario" Type="Self.tipo_usuario" Multiplicity="0..1" />
+          <End Role="usuario" Type="Self.usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tipo_usuario">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="usuario">
+              <PropertyRef Name="id_tipo_usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MarvelModelStoreContainer">
+          <EntitySet Name="actor" EntityType="Self.actor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="companyia" EntityType="Self.companyia" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="director" EntityType="Self.director" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="frase" EntityType="Self.frase" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="genero" EntityType="Self.genero" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="pedido" EntityType="Self.pedido" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="pelicula" EntityType="Self.pelicula" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tipo_pago" EntityType="Self.tipo_pago" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tipo_usuario" EntityType="Self.tipo_usuario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="usuario" EntityType="Self.usuario" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_frase_actor" Association="Self.FK_frase_actor">
+            <End Role="actor" EntitySet="actor" />
+            <End Role="frase" EntitySet="frase" />
+          </AssociationSet>
+          <AssociationSet Name="FK_frase_pelicula" Association="Self.FK_frase_pelicula">
+            <End Role="pelicula" EntitySet="pelicula" />
+            <End Role="frase" EntitySet="frase" />
+          </AssociationSet>
+          <AssociationSet Name="FK_pedido_tipo_pago" Association="Self.FK_pedido_tipo_pago">
+            <End Role="tipo_pago" EntitySet="tipo_pago" />
+            <End Role="pedido" EntitySet="pedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK_pedido_usuario" Association="Self.FK_pedido_usuario">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="pedido" EntitySet="pedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK_pelicula_actor" Association="Self.FK_pelicula_actor">
+            <End Role="actor" EntitySet="actor" />
+            <End Role="pelicula" EntitySet="pelicula" />
+          </AssociationSet>
+          <AssociationSet Name="FK_pelicula_companyia" Association="Self.FK_pelicula_companyia">
+            <End Role="companyia" EntitySet="companyia" />
+            <End Role="pelicula" EntitySet="pelicula" />
+          </AssociationSet>
+          <AssociationSet Name="FK_pelicula_director" Association="Self.FK_pelicula_director">
+            <End Role="director" EntitySet="director" />
+            <End Role="pelicula" EntitySet="pelicula" />
+          </AssociationSet>
+          <AssociationSet Name="FK_pelicula_genero" Association="Self.FK_pelicula_genero">
+            <End Role="genero" EntitySet="genero" />
+            <End Role="pelicula" EntitySet="pelicula" />
+          </AssociationSet>
+          <AssociationSet Name="FK_usuario_tipo_usuario" Association="Self.FK_usuario_tipo_usuario">
+            <End Role="tipo_usuario" EntitySet="tipo_usuario" />
+            <End Role="usuario" EntitySet="usuario" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MarvelModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="actor">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="actor_principal" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="fecha_nacimiento" Type="DateTime" Precision="0" />
+          <Property Name="años_activo" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="ocupacion" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="premios" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="foto" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="frase" Relationship="Self.FK_frase_actor" FromRole="actor" ToRole="frase" />
+          <NavigationProperty Name="pelicula" Relationship="Self.FK_pelicula_actor" FromRole="actor" ToRole="pelicula" />
+        </EntityType>
+        <EntityType Name="companyia">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="tipo" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="industria" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="sede_central" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="fundacion" Type="DateTime" Precision="0" />
+          <Property Name="fundador" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="logo" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="pelicula" Relationship="Self.FK_pelicula_companyia" FromRole="companyia" ToRole="pelicula" />
+        </EntityType>
+        <EntityType Name="director">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="fecha_nacimiento" Type="DateTime" Precision="0" />
+          <Property Name="residencia" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="premios" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="distinciones" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="foto" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="pelicula" Relationship="Self.FK_pelicula_director" FromRole="director" ToRole="pelicula" />
+        </EntityType>
+        <EntityType Name="frase">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_pelicula" Type="Int32" />
+          <Property Name="id_actor" Type="Int32" />
+          <Property Name="frase1" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="actor" Relationship="Self.FK_frase_actor" FromRole="frase" ToRole="actor" />
+          <NavigationProperty Name="pelicula" Relationship="Self.FK_frase_pelicula" FromRole="frase" ToRole="pelicula" />
+        </EntityType>
+        <EntityType Name="genero">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="pelicula" Relationship="Self.FK_pelicula_genero" FromRole="genero" ToRole="pelicula" />
+        </EntityType>
+        <EntityType Name="pedido">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_tipo_pago" Type="Int32" />
+          <Property Name="id_usuario" Type="Int32" />
+          <Property Name="nombre" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="precio" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="tipo_pago" Relationship="Self.FK_pedido_tipo_pago" FromRole="pedido" ToRole="tipo_pago" />
+          <NavigationProperty Name="usuario" Relationship="Self.FK_pedido_usuario" FromRole="pedido" ToRole="usuario" />
+        </EntityType>
+        <EntityType Name="pelicula">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_actor" Type="Int32" />
+          <Property Name="id_director" Type="Int32" />
+          <Property Name="id_genero" Type="Int32" />
+          <Property Name="id_companyia" Type="Int32" />
+          <Property Name="titulo" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="añolanzamiento" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="sinopsis" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="premios" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="duracion" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="clasificacion" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="presupuesto" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="recaudacion" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="actor" Relationship="Self.FK_pelicula_actor" FromRole="pelicula" ToRole="actor" />
+          <NavigationProperty Name="companyia" Relationship="Self.FK_pelicula_companyia" FromRole="pelicula" ToRole="companyia" />
+          <NavigationProperty Name="director" Relationship="Self.FK_pelicula_director" FromRole="pelicula" ToRole="director" />
+          <NavigationProperty Name="frase" Relationship="Self.FK_frase_pelicula" FromRole="pelicula" ToRole="frase" />
+          <NavigationProperty Name="genero" Relationship="Self.FK_pelicula_genero" FromRole="pelicula" ToRole="genero" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="tipo_pago">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="pedido" Relationship="Self.FK_pedido_tipo_pago" FromRole="tipo_pago" ToRole="pedido" />
+        </EntityType>
+        <EntityType Name="tipo_usuario">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="usuario" Relationship="Self.FK_usuario_tipo_usuario" FromRole="tipo_usuario" ToRole="usuario" />
+        </EntityType>
+        <EntityType Name="usuario">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_tipo_usuario" Type="Int32" />
+          <Property Name="nombre" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="apellido01" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="apellido02" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="pedido" Relationship="Self.FK_pedido_usuario" FromRole="usuario" ToRole="pedido" />
+          <NavigationProperty Name="tipo_usuario" Relationship="Self.FK_usuario_tipo_usuario" FromRole="usuario" ToRole="tipo_usuario" />
+        </EntityType>
+        <Association Name="FK_frase_actor">
+          <End Role="actor" Type="Self.actor" Multiplicity="0..1" />
+          <End Role="frase" Type="Self.frase" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="actor">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="frase">
+              <PropertyRef Name="id_actor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_pelicula_actor">
+          <End Role="actor" Type="Self.actor" Multiplicity="0..1" />
+          <End Role="pelicula" Type="Self.pelicula" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="actor">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="pelicula">
+              <PropertyRef Name="id_actor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_pelicula_companyia">
+          <End Role="companyia" Type="Self.companyia" Multiplicity="0..1" />
+          <End Role="pelicula" Type="Self.pelicula" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="companyia">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="pelicula">
+              <PropertyRef Name="id_companyia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_pelicula_director">
+          <End Role="director" Type="Self.director" Multiplicity="0..1" />
+          <End Role="pelicula" Type="Self.pelicula" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="director">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="pelicula">
+              <PropertyRef Name="id_director" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_frase_pelicula">
+          <End Role="pelicula" Type="Self.pelicula" Multiplicity="0..1" />
+          <End Role="frase" Type="Self.frase" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="pelicula">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="frase">
+              <PropertyRef Name="id_pelicula" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_pelicula_genero">
+          <End Role="genero" Type="Self.genero" Multiplicity="0..1" />
+          <End Role="pelicula" Type="Self.pelicula" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="genero">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="pelicula">
+              <PropertyRef Name="id_genero" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_pedido_tipo_pago">
+          <End Role="tipo_pago" Type="Self.tipo_pago" Multiplicity="0..1" />
+          <End Role="pedido" Type="Self.pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tipo_pago">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="pedido">
+              <PropertyRef Name="id_tipo_pago" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_pedido_usuario">
+          <End Role="usuario" Type="Self.usuario" Multiplicity="0..1" />
+          <End Role="pedido" Type="Self.pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="pedido">
+              <PropertyRef Name="id_usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_usuario_tipo_usuario">
+          <End Role="tipo_usuario" Type="Self.tipo_usuario" Multiplicity="0..1" />
+          <End Role="usuario" Type="Self.usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tipo_usuario">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="usuario">
+              <PropertyRef Name="id_tipo_usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MarvelDbContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="actor" EntityType="Self.actor" />
+          <EntitySet Name="companyia" EntityType="Self.companyia" />
+          <EntitySet Name="director" EntityType="Self.director" />
+          <EntitySet Name="frase" EntityType="Self.frase" />
+          <EntitySet Name="genero" EntityType="Self.genero" />
+          <EntitySet Name="pedido" EntityType="Self.pedido" />
+          <EntitySet Name="pelicula" EntityType="Self.pelicula" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="tipo_pago" EntityType="Self.tipo_pago" />
+          <EntitySet Name="tipo_usuario" EntityType="Self.tipo_usuario" />
+          <EntitySet Name="usuario" EntityType="Self.usuario" />
+          <AssociationSet Name="FK_frase_actor" Association="Self.FK_frase_actor">
+            <End Role="actor" EntitySet="actor" />
+            <End Role="frase" EntitySet="frase" />
+          </AssociationSet>
+          <AssociationSet Name="FK_pelicula_actor" Association="Self.FK_pelicula_actor">
+            <End Role="actor" EntitySet="actor" />
+            <End Role="pelicula" EntitySet="pelicula" />
+          </AssociationSet>
+          <AssociationSet Name="FK_pelicula_companyia" Association="Self.FK_pelicula_companyia">
+            <End Role="companyia" EntitySet="companyia" />
+            <End Role="pelicula" EntitySet="pelicula" />
+          </AssociationSet>
+          <AssociationSet Name="FK_pelicula_director" Association="Self.FK_pelicula_director">
+            <End Role="director" EntitySet="director" />
+            <End Role="pelicula" EntitySet="pelicula" />
+          </AssociationSet>
+          <AssociationSet Name="FK_frase_pelicula" Association="Self.FK_frase_pelicula">
+            <End Role="pelicula" EntitySet="pelicula" />
+            <End Role="frase" EntitySet="frase" />
+          </AssociationSet>
+          <AssociationSet Name="FK_pelicula_genero" Association="Self.FK_pelicula_genero">
+            <End Role="genero" EntitySet="genero" />
+            <End Role="pelicula" EntitySet="pelicula" />
+          </AssociationSet>
+          <AssociationSet Name="FK_pedido_tipo_pago" Association="Self.FK_pedido_tipo_pago">
+            <End Role="tipo_pago" EntitySet="tipo_pago" />
+            <End Role="pedido" EntitySet="pedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK_pedido_usuario" Association="Self.FK_pedido_usuario">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="pedido" EntitySet="pedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK_usuario_tipo_usuario" Association="Self.FK_usuario_tipo_usuario">
+            <End Role="tipo_usuario" EntitySet="tipo_usuario" />
+            <End Role="usuario" EntitySet="usuario" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MarvelModelStoreContainer" CdmEntityContainer="MarvelDbContext">
+          <EntitySetMapping Name="actor">
+            <EntityTypeMapping TypeName="MarvelModel.actor">
+              <MappingFragment StoreEntitySet="actor">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="actor_principal" ColumnName="actor_principal" />
+                <ScalarProperty Name="fecha_nacimiento" ColumnName="fecha_nacimiento" />
+                <ScalarProperty Name="años_activo" ColumnName="años_activo" />
+                <ScalarProperty Name="ocupacion" ColumnName="ocupacion" />
+                <ScalarProperty Name="premios" ColumnName="premios" />
+                <ScalarProperty Name="foto" ColumnName="foto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="companyia">
+            <EntityTypeMapping TypeName="MarvelModel.companyia">
+              <MappingFragment StoreEntitySet="companyia">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="tipo" ColumnName="tipo" />
+                <ScalarProperty Name="industria" ColumnName="industria" />
+                <ScalarProperty Name="sede_central" ColumnName="sede_central" />
+                <ScalarProperty Name="fundacion" ColumnName="fundacion" />
+                <ScalarProperty Name="fundador" ColumnName="fundador" />
+                <ScalarProperty Name="logo" ColumnName="logo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="director">
+            <EntityTypeMapping TypeName="MarvelModel.director">
+              <MappingFragment StoreEntitySet="director">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="fecha_nacimiento" ColumnName="fecha_nacimiento" />
+                <ScalarProperty Name="residencia" ColumnName="residencia" />
+                <ScalarProperty Name="premios" ColumnName="premios" />
+                <ScalarProperty Name="distinciones" ColumnName="distinciones" />
+                <ScalarProperty Name="foto" ColumnName="foto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="frase">
+            <EntityTypeMapping TypeName="MarvelModel.frase">
+              <MappingFragment StoreEntitySet="frase">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="id_pelicula" ColumnName="id_pelicula" />
+                <ScalarProperty Name="id_actor" ColumnName="id_actor" />
+                <ScalarProperty Name="frase1" ColumnName="frase" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="genero">
+            <EntityTypeMapping TypeName="MarvelModel.genero">
+              <MappingFragment StoreEntitySet="genero">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="pedido">
+            <EntityTypeMapping TypeName="MarvelModel.pedido">
+              <MappingFragment StoreEntitySet="pedido">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="id_tipo_pago" ColumnName="id_tipo_pago" />
+                <ScalarProperty Name="id_usuario" ColumnName="id_usuario" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="precio" ColumnName="precio" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="pelicula">
+            <EntityTypeMapping TypeName="MarvelModel.pelicula">
+              <MappingFragment StoreEntitySet="pelicula">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="id_actor" ColumnName="id_actor" />
+                <ScalarProperty Name="id_director" ColumnName="id_director" />
+                <ScalarProperty Name="id_genero" ColumnName="id_genero" />
+                <ScalarProperty Name="id_companyia" ColumnName="id_companyia" />
+                <ScalarProperty Name="titulo" ColumnName="titulo" />
+                <ScalarProperty Name="añolanzamiento" ColumnName="añolanzamiento" />
+                <ScalarProperty Name="sinopsis" ColumnName="sinopsis" />
+                <ScalarProperty Name="premios" ColumnName="premios" />
+                <ScalarProperty Name="duracion" ColumnName="duracion" />
+                <ScalarProperty Name="clasificacion" ColumnName="clasificacion" />
+                <ScalarProperty Name="presupuesto" ColumnName="presupuesto" />
+                <ScalarProperty Name="recaudacion" ColumnName="recaudacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="MarvelModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tipo_pago">
+            <EntityTypeMapping TypeName="MarvelModel.tipo_pago">
+              <MappingFragment StoreEntitySet="tipo_pago">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tipo_usuario">
+            <EntityTypeMapping TypeName="MarvelModel.tipo_usuario">
+              <MappingFragment StoreEntitySet="tipo_usuario">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="usuario">
+            <EntityTypeMapping TypeName="MarvelModel.usuario">
+              <MappingFragment StoreEntitySet="usuario">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="id_tipo_usuario" ColumnName="id_tipo_usuario" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="apellido01" ColumnName="apellido01" />
+                <ScalarProperty Name="apellido02" ColumnName="apellido02" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,99 @@
+﻿@model IEnumerable<_04_Data.Datos.pelicula>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.titulo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.añolanzamiento)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.sinopsis)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.premios)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.duracion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.clasificacion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.presupuesto)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.recaudacion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.actor.actor_principal)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.companyia.nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.director.nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.genero.nombre)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.titulo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.añolanzamiento)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.sinopsis)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.premios)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.duracion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.clasificacion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.presupuesto)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.recaudacion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.actor.actor_principal)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.companyia.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.director.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.genero.nombre)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.id })
+        </td>
+    </tr>
+}
+
+</table>
